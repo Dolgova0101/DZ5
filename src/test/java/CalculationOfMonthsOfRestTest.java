@@ -1,26 +1,25 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import ru.netology.services.CalculationOfMonthsOfRest;
 
 
 public class CalculationOfMonthsOfRestTest {
-    @Test
-    public void threeMonthsAYear() {
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/calculation.csv")
+    public void restOfTheYear(int expected, int income, int expenses, int threshold) {
         CalculationOfMonthsOfRest service = new CalculationOfMonthsOfRest();
-        int expected = 3;
-        int actual = service.calculate(10_000, 3_000, 20_000);
+
+        int actual = service.calculate(income, expenses, threshold);
+
+        Assertions.assertEquals(expected, actual);
 
 
     }
-
-    @Test
-    public void twoMonthsAYear() {
-        CalculationOfMonthsOfRest service = new CalculationOfMonthsOfRest();
-        int expected = 2;
-        int actual = service.calculate(100_000, 60_000, 150_000);
-
-
-    }
-
-
 }
+
+
+
+
+
